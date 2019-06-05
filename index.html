@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -26,8 +26,8 @@
       }
 
     </style>
-
   </head>
+  
   <body>
 
     <div id="form">
@@ -49,14 +49,20 @@
       function updateSubcategories() {
         var cat_select = document.getElementById("category-select");
         var subcat_select = document.getElementById("subcategory-select");
-
         var cat_id = cat_select.options[cat_select.selectedIndex].value;
-
         var url = 'states_list.php?category_id=' + cat_id;
-
+        //creating a new request
         var xhr = new XMLHttpRequest();
+        // use 'GET' only when you want fetch/get the data.
+        // 'true' means it sends request in background/Asynchronous
         xhr.open('GET', url, true);
         xhr.onreadystatechange = function () {
+        /* readyStates = 0 : connection created but not opened
+           readyStates = 1 : connection opened
+           readyStates = 2 : Request sent, received by server
+           readyStates = 3 : Response in progress (partial data)
+           readyStates = 4 : Response completed (success or failture)
+        */
           if(xhr.readyState == 4 && xhr.status == 200) {
             subcat_select.innerHTML = xhr.responseText;
             subcat_select.style.display = 'inline';
