@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Ajax Category Select</title>
+    <style>
+    	#form h1{color: lightgray}
+    	#category-select{
+    		font-size: 25px;
+    		color:#555;
+    	}
+    	#category-select option:nth-child(1){
+    		color: #555;
+    	}
+
+    	#category-select option{
+    		color: royalblue;
+    	}
+
+      #subcategory-select {
+        display: none;
+        font-size: 25px;
+        color: #555;
+      }
+
+    </style>
+
+  </head>
+  <body>
+
+    <div id="form">
+      <h1>Which country are you belong to ?</h1>
+      <select id="category-select">
+        <option disabled selected>Please select</option>
+        <option value="1">Argentina</option>
+        <option value="2">Australia</option>
+        <option value="3">India</option>
+        <option value="4">USA</option>
+        
+        
+      </select>
+      <select id="subcategory-select">
+      </select>
+    </div>
+
+    <script>
+      function updateSubcategories() {
+        var cat_select = document.getElementById("category-select");
+        var subcat_select = document.getElementById("subcategory-select");
+
+        var cat_id = cat_select.options[cat_select.selectedIndex].value;
+
+        var url = 'states_list.php?category_id=' + cat_id;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+          if(xhr.readyState == 4 && xhr.status == 200) {
+            subcat_select.innerHTML = xhr.responseText;
+            subcat_select.style.display = 'inline';
+          }
+        }
+        xhr.send();
+      }
+
+      var cat_select = document.getElementById("category-select");
+      cat_select.addEventListener("change", updateSubcategories);
+    </script>
+
+  </body>
+</html>
